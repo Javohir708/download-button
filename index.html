@@ -82,33 +82,46 @@
         const icon = button.querySelector('i');
         const text = button.querySelector('p');
         const loadingBar = button.querySelector('.loading-bar');
-
+        
         button.addEventListener('click', () => {
-            let progress = 0;
-            text.textContent = '0%';
-            loadingBar.style.width = '0';
-            
-            icon.classList.replace('fa-cloud-download-alt', 'fa-circle-notch'); 
-            icon.classList.add('rotate');
 
-            const interval = setInterval(() => {
-                progress += 1;
-                text.textContent = `${progress}%`;
-                loadingBar.style.width = `${progress}%`;
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    text.textContent = 'Done';
-                    icon.classList.replace('fa-circle-notch', 'fa-check'); 
-                    icon.classList.remove('rotate');
-                    text.style.color = 'green';  
-                    text.style.fontWeight = '700';
-                    icon.style.color = 'green';  
-                    icon.style.fontSize = '20px';
-                    button.style.backgroundColor = '#e0ffe0';
-                }
-            }, 50);
+            if (text.textContent !== 'Done') {
+                let progress = 0;
+                text.textContent = '0%';
+                loadingBar.style.width = '0';
+                
+                icon.classList.replace('fa-cloud-download-alt', 'fa-circle-notch'); 
+                icon.classList.add('rotate');
+    
+                const interval = setInterval(() => {
+                    progress += 1;
+                    text.textContent = `${progress}%`;
+                    loadingBar.style.width = `${progress}%`;
+    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        text.textContent = 'Done';
+                        icon.classList.replace('fa-circle-notch', 'fa-check'); 
+                        icon.classList.remove('rotate');
+                        text.style.color = 'green';  
+                        text.style.fontWeight = '700';
+                        icon.style.color = 'green';  
+                        icon.style.fontSize = '20px';
+                        button.style.backgroundColor = '#e0ffe0';
+                    }
+                }, 50);
+            } else {
+                text.textContent = 'Download';
+                icon.classList.replace('fa-check', 'fa-cloud-download-alt');
+                icon.classList.remove('rotate');
+                text.style.color = '#A5A9B1';
+                text.style.fontWeight = 'normal';
+                icon.style.color = '#a5a9b1';
+                icon.style.fontSize = '18px';
+                button.style.backgroundColor = '#fff';
+            }
         });
     </script>
+    
 </body>
 </html>
