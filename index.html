@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Download Button</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #000;
+        }
+        .btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        button {
+            padding: 6px 30px;
+            border: none;
+            background-color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+            width: 160px; 
+            height: 60px; 
+        }
+        i {
+            font-size: 18px;
+            transition: opacity 0.3s, transform 0.3s ease;
+        }
+        p {
+            color: #A5A9B1;
+            font-size: 16px;
+            padding-left: 5px;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+        .loading-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background-color: #00ff00;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        .rotate {
+            animation: spin 1s linear infinite;
+            transform-origin: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="btn">
+        <button id="download-btn">
+            <i class="fas fa-cloud-download-alt" style="color: #a5a9b1;"></i>
+            <p>Download</p>
+            <span class="loading-bar"></span>
+        </button>
+    </div>
+
+    <script>
+        const button = document.getElementById('download-btn');
+        const icon = button.querySelector('i');
+        const text = button.querySelector('p');
+        const loadingBar = button.querySelector('.loading-bar');
+
+        button.addEventListener('click', () => {
+            let progress = 0;
+            text.textContent = '0%';
+            loadingBar.style.width = '0';
+            
+            icon.classList.replace('fa-cloud-download-alt', 'fa-circle-notch'); 
+            icon.classList.add('rotate');
+
+            const interval = setInterval(() => {
+                progress += 1;
+                text.textContent = `${progress}%`;
+                loadingBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    text.textContent = 'Done';
+                    icon.classList.replace('fa-circle-notch', 'fa-check'); 
+                    icon.classList.remove('rotate');
+                    text.style.color = 'green';  
+                    text.style.fontWeight = '700';
+                    icon.style.color = 'green';  
+                    icon.style.fontSize = '20px';
+                    button.style.backgroundColor = '#e0ffe0';
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
